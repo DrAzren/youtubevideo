@@ -1,0 +1,8 @@
+work/
+video/renders/
+video/.hyperframes/
+video/excerpt.html
+node_modules/
+*.wav
+assets/src/cover_pdf-1.png
+out/

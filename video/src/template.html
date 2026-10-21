@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="ms">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>Sejarah Skizofrenia — Dr Azren</title>
+    <script src="assets/js/gsap.min.js"></script>
+    <style>
+      @font-face { font-family: "Playfair Display"; src: url("assets/fonts/PlayfairDisplay.ttf") format("truetype"); font-weight: 400 900; font-style: normal; }
+      @font-face { font-family: "Playfair Display"; src: url("assets/fonts/PlayfairDisplay-Italic.ttf") format("truetype"); font-weight: 400 900; font-style: italic; }
+      @font-face { font-family: "Inter"; src: url("assets/fonts/Inter.ttf") format("truetype"); font-weight: 100 900; }
+      @font-face { font-family: "Cormorant Garamond"; src: url("assets/fonts/CormorantGaramond.ttf") format("truetype"); font-weight: 300 700; }
+      @font-face { font-family: "Special Elite"; src: url("assets/fonts/SpecialElite.ttf") format("truetype"); font-weight: 400; }
+
+      :root {
+        --navy: #13233f; --navy2: #0b1629; --navy3: #1c3358;
+        --gold: #c9a45c; --gold2: #e3c98f; --gold3: #9b7a3a;
+        --ivory: #f5eedf; --parch: #eadcc0; --beige: #d6c29c; --ink: #2b2218;
+        --teal: #4f8a8b; --teal2: #7fb3ae; --burg: #7d2e3a; --burg2: #a2464f;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1920px; height: 1080px; overflow: hidden; background: var(--navy2); }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; background: var(--navy2); font-family: "Inter", sans-serif; color: var(--ivory); }
+
+      .scene { position: absolute; inset: 0; overflow: hidden; }
+      .scene.fx { pointer-events: none; }
+      .layer { position: absolute; inset: 0; }
+      .cover { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+      .plate { position: absolute; inset: -4%; width: 108%; height: 108%; object-fit: cover; }
+      .abs { position: absolute; }
+      .center { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+      .col { display: flex; flex-direction: column; }
+      .row { display: flex; flex-direction: row; }
+
+      .tex-paper { background: url("assets/tex/paper.jpg") center / cover; }
+      .tex-navy { background: url("assets/tex/navy.jpg") center / cover; }
+      .vignette { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 46%, rgba(0,0,0,0) 52%, rgba(6,10,20,0.55) 100%); }
+      .vignette.warm { background: radial-gradient(ellipse at 50% 46%, rgba(0,0,0,0) 48%, rgba(30,18,8,0.55) 100%); }
+      .shade-b { position: absolute; left: 0; right: 0; bottom: 0; height: 46%; background: linear-gradient(to top, rgba(8,13,26,0.82), rgba(8,13,26,0)); }
+      .shade-l { position: absolute; top: 0; bottom: 0; left: 0; width: 58%; background: linear-gradient(to right, rgba(8,13,26,0.86), rgba(8,13,26,0)); }
+      .shade-r { position: absolute; top: 0; bottom: 0; right: 0; width: 58%; background: linear-gradient(to left, rgba(8,13,26,0.86), rgba(8,13,26,0)); }
+
+      .serif { font-family: "Playfair Display", serif; }
+      .garamond { font-family: "Cormorant Garamond", serif; }
+      .type { font-family: "Special Elite", monospace; }
+      .gold { color: var(--gold2); }
+      .teal { color: var(--teal2); }
+      .ink { color: var(--ink); }
+
+      .kicker { font-family: "Inter"; font-weight: 600; letter-spacing: 0.32em; font-size: 22px; text-transform: uppercase; color: var(--gold2); }
+      .h-xl { font-family: "Playfair Display"; font-weight: 800; font-size: 150px; line-height: 1; letter-spacing: 0.02em; }
+      .h-lg { font-family: "Playfair Display"; font-weight: 700; font-size: 96px; line-height: 1.04; }
+      .h-md { font-family: "Playfair Display"; font-weight: 700; font-size: 64px; line-height: 1.1; }
+      .h-sm { font-family: "Playfair Display"; font-weight: 600; font-size: 44px; line-height: 1.15; }
+      .body-lg { font-family: "Inter"; font-weight: 500; font-size: 34px; line-height: 1.35; }
+      .body-md { font-family: "Inter"; font-weight: 500; font-size: 27px; line-height: 1.35; }
+      .letter { display: inline-block; will-change: transform, opacity; }
+      .word { display: inline-block; }
+
+      .card {
+        position: absolute; background: var(--ivory); color: var(--ink); border-radius: 6px;
+        box-shadow: 0 18px 40px rgba(0,0,0,0.35), 0 2px 0 rgba(255,255,255,0.4) inset;
+      }
+      .card.paper { background: url("assets/tex/paper.jpg") center / 1920px 1080px; }
+      .card.navy { background: rgba(14,26,48,0.92); color: var(--ivory); border: 1px solid rgba(201,164,92,0.45); }
+      .card.glass { background: rgba(14,26,48,0.62); color: var(--ivory); border: 1px solid rgba(127,179,174,0.45); backdrop-filter: blur(2px); }
+      .chip { display: flex; align-items: center; gap: 18px; padding: 20px 30px; font-family: "Inter"; font-weight: 600; font-size: 30px; }
+      .chip svg { width: 54px; height: 54px; flex: none; }
+      .icon { display: block; }
+      .icon svg { width: 100%; height: 100%; display: block; }
+      .tape { position: absolute; width: 120px; height: 34px; background: rgba(233,215,170,0.72); box-shadow: 0 2px 6px rgba(0,0,0,0.15); }
+      .rule { position: absolute; height: 3px; background: var(--gold); transform-origin: left center; }
+      .frame-gold { position: absolute; border: 2px solid var(--gold); }
+      .stamp { position: absolute; font-family: "Special Elite"; font-size: 54px; letter-spacing: 0.08em; color: var(--burg2); border: 5px solid var(--burg2); padding: 6px 26px; border-radius: 8px; transform-origin: center; mix-blend-mode: multiply; }
+      .stamp.light { mix-blend-mode: normal; color: #e07a80; border-color: #e07a80; }
+      .dot { position: absolute; border-radius: 50%; }
+      .particle { position: absolute; border-radius: 50%; background: rgba(255,226,170,0.9); filter: blur(0.6px); }
+      .glow { position: absolute; border-radius: 50%; background: radial-gradient(circle, rgba(255,196,110,0.55), rgba(255,170,80,0) 70%); mix-blend-mode: screen; }
+
+      /* lower third */
+      .lt { position: absolute; left: 110px; bottom: 250px; }
+      .lt .lt-name { font-family: "Playfair Display"; font-weight: 700; font-size: 62px; color: var(--ivory); letter-spacing: 0.04em; white-space: nowrap; }
+      .lt .lt-sub { font-family: "Inter"; font-weight: 500; font-size: 26px; color: var(--gold2); letter-spacing: 0.12em; text-transform: uppercase; margin-top: 10px; white-space: nowrap; }
+      .lt .lt-bar { position: absolute; left: -28px; top: 6px; width: 6px; height: 118px; background: var(--gold); transform-origin: top center; }
+
+      /* chapter marker */
+      #chapter { position: absolute; left: 70px; top: 52px; width: 900px; height: 50px; z-index: 55; }
+      #chapter .chap { position: absolute; left: 0; top: 0; display: flex; align-items: center; gap: 16px; opacity: 0; }
+      #chapter .num { font-family: "Playfair Display"; font-style: italic; font-weight: 600; font-size: 28px; color: var(--gold2); }
+      #chapter .bar { width: 46px; height: 2px; background: var(--gold); transform-origin: left center; }
+      #chapter .lbl { font-family: "Inter"; font-weight: 600; font-size: 19px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--ivory); opacity: 0.9; }
+      #brand { position: absolute; right: 64px; top: 50px; z-index: 55; display: flex; align-items: center; gap: 12px; font-family: "Inter"; font-weight: 700; font-size: 18px; letter-spacing: 0.34em; color: var(--ivory); }
+      #brand i { width: 10px; height: 10px; border-radius: 50%; background: var(--gold); display: block; }
+
+      /* captions */
+      #captions { position: absolute; left: 0; right: 0; bottom: 0; height: 240px; z-index: 50; }
+      #cap-band { position: absolute; left: 0; right: 0; bottom: 0; height: 230px; background: linear-gradient(to top, rgba(6,11,22,0.84), rgba(6,11,22,0.6) 55%, rgba(6,11,22,0)); }
+      .cap { position: absolute; left: 160px; right: 160px; bottom: 74px; text-align: center; font-family: "Inter"; font-weight: 600; font-size: 46px; line-height: 1.22; color: var(--ivory); text-shadow: 0 2px 12px rgba(0,0,0,0.75), 0 0 2px rgba(0,0,0,0.9); opacity: 0; }
+      .cap .cw { display: inline-block; opacity: 0; margin: 0 0.12em; }
+      .cap .cw.g { color: var(--gold2); }
+      .cap .cw.t { color: var(--teal2); }
+
+      #grain { position: absolute; inset: -64px; z-index: 60; background: url("assets/tex/grain.png") repeat; opacity: 0.55; mix-blend-mode: overlay; pointer-events: none; }
+      #letterbox-fade { position: absolute; inset: 0; z-index: 70; background: #050912; opacity: 0; pointer-events: none; }
+
+      .vwrap { position: absolute; inset: 0; overflow: hidden; z-index: 20; opacity: 0; }
+      .vwrap video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+      /* 3d book */
+      .book-stage { position: absolute; inset: 0; perspective: 2200px; perspective-origin: 50% 45%; }
+      .book { position: absolute; width: 470px; height: 668px; left: 360px; top: 150px; transform-style: preserve-3d; }
+      .book .face { position: absolute; backface-visibility: hidden; }
+      .book .front { width: 470px; height: 668px; left: 0; top: 0; background-size: 100% 100%; }
+      .book .back { width: 470px; height: 668px; left: 0; top: 0; background-size: 100% 100%; }
+      .book .spine { width: 50px; height: 668px; left: -25px; top: 0; background-size: 100% 100%; }
+      .book .pages { width: 46px; height: 660px; left: 447px; top: 4px; background: repeating-linear-gradient(to right, #f3ecdc 0 2px, #ddd2bb 2px 3px); }
+      .book .ptop { width: 466px; height: 46px; left: 2px; top: -23px; background: repeating-linear-gradient(to bottom, #f3ecdc 0 2px, #ddd2bb 2px 3px); }
+      .book .pbot { width: 466px; height: 46px; left: 2px; top: 645px; background: repeating-linear-gradient(to bottom, #efe7d5 0 2px, #d6cab1 2px 3px); }
+      .book .sheen { position: absolute; inset: 0; background: linear-gradient(105deg, rgba(255,255,255,0) 30%, rgba(255,255,255,0.55) 48%, rgba(255,255,255,0) 62%); mix-blend-mode: soft-light; }
+      .book .shade { position: absolute; inset: 0; background: linear-gradient(to right, rgba(0,0,0,0.18), rgba(0,0,0,0) 12%, rgba(0,0,0,0) 88%, rgba(0,0,0,0.08)); }
+      .book-shadow { position: absolute; width: 560px; height: 70px; left: 320px; top: 820px; border-radius: 50%; background: radial-gradient(ellipse, rgba(0,0,0,0.6), rgba(0,0,0,0) 70%); filter: blur(6px); }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="{{DURATION}}" data-width="1920" data-height="1080">
+{{SCENES}}
+      <div id="overlays" class="clip" data-start="0" data-duration="{{DURATION}}" data-track-index="8" style="position:absolute;inset:0;z-index:120;pointer-events:none">
+        <div id="chapter"></div>
+        <div id="brand"><i></i><span>DR AZREN</span></div>
+        <div id="captions"><div id="cap-band"></div></div>
+        <div id="letterbox-fade"></div>
+      </div>
+      <audio id="mix" src="{{AUDIO}}" data-start="0" data-duration="{{DURATION}}" data-track-index="9" data-volume="1"></audio>
+    </div>
+    <script src="assets/js/words.js"></script>
+    <script src="assets/js/captions.js"></script>
+    <script src="assets/js/plan.js"></script>
+    <script src="assets/js/lib.js"></script>
+    <script src="assets/js/scenes_a.js"></script>
+    <script src="assets/js/scenes_b.js"></script>
+    <script src="assets/js/scenes_c.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script>
+      window.__timelines["main"] = HF.tl;
+    </script>
+  </body>
+</html>
