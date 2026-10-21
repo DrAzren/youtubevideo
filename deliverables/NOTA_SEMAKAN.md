@@ -61,3 +61,18 @@ Apa yang anda ucapkan **tidak diubah**. Teks pada skrin menggunakan ejaan dan ko
 - [x] Kapsyen muncul hanya selepas perkataan disebut (perkataan demi perkataan)
 - [x] Kulit buku asal digunakan tepat (depan, spine dan belakang dari PDF rasmi)
 - [x] Pembukaan dan penutup profesional (kad tajuk + kad jenama DR AZREN | SPREAD POSITIVITY)
+
+## 4. Spesifikasi eksport
+
+| Fail | Butiran |
+|---|---|
+| `release/Sejarah_Skizofrenia_4K_UHD.mp4` | 3840×2160, 30 fps, H.264 High, AAC stereo 320 kbps / 48 kHz, 8:09 |
+| `release/Sejarah_Skizofrenia_1080p.mp4` | 1920×1080 render induk HyperFrames (kualiti "delivery") |
+| `deliverables/Sejarah_Skizofrenia_MS.srt` | Sari kata Bahasa Melayu (217 frasa, ikut masa perkataan) |
+| `deliverables/stems/*.flac` | Narasi bersih, muzik latar, SFX, campuran akhir (48 kHz) |
+
+**Tentang 4K:** Komposisi dirender pada 1920×1080 (render asli HyperFrames, BeginFrame, ±34 min). Ia kemudian dinaikkan skala ke 3840×2160 dengan ffmpeg (Lanczos + penajaman ringan). Saya uji render 4K asli pada mesin awan ini (4 teras CPU, tiada GPU): 8 saat video mengambil ±10 minit, jadi seluruh video akan mengambil ±10 jam. Projek HyperFrames boleh dirender semula dalam 4K asli pada mesin yang lebih laju atau ber-GPU:
+
+```bash
+cd video && python3 ../tools/gen_index.py assets/audio/final_mix.wav --uhd && npx hyperframes render --quality delivery --output ../out/Sejarah_Skizofrenia_4K_native.mp4
+```
