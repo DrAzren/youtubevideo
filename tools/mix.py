@@ -5,7 +5,10 @@ from scipy import signal
 
 R = '/home/user/youtubevideo/'
 SR = 48000
-DUR = 489.0
+import json as _j
+_PLAN = _j.loads(open(R + 'video/assets/js/plan.js').read().split('=', 1)[1].rstrip().rstrip(';'))
+DUR = _PLAN['duration']
+SC = {x['id']: x['start'] for x in _PLAN['scenes']}
 N = int(DUR * SR)
 rs = np.random.default_rng(2026)
 
@@ -271,14 +274,14 @@ vo = np.zeros((N, 2)); vo[:len(vo_m)] = st(vo_m[:N])
 
 # ---------------- music bed ----------------
 M = R + 'video/assets/audio/music/'
-SEGS = [  # file, timeline start, source offset, duration, fade in, fade out, gain dB
-    ('tyops_doc.mp3', 0.0, 0.0, 64.0, 3.0, 5.0, 0),
-    ('tyops_cine.mp3', 59.0, 0.0, 66.0, 4.0, 5.0, 0),
-    ('cinemusic01.mp3', 120.0, 8.0, 80.0, 5.0, 5.0, -2),
-    ('tyops_cine02.mp3', 195.5, 0.0, 74.5, 4.0, 5.0, -1),
-    ('univ_soft.mp3', 268.0, 0.0, 117.0, 4.0, 5.0, 0),
-    ('emopiano2.mp3', 380.0, 0.0, 109.0, 5.0, 4.5, 0),
-]
+# music sections follow the story chapters (anchored to scene starts)
+_st = [0.0, SC['s04'] + 2.0, SC['s07'] - 3.0, SC['s10'] - 1.7, SC['s15'] - 8.8, SC['s19'] - 2.0, DUR]
+_src = [('tyops_doc.mp3', 0.0, 0), ('tyops_cine.mp3', 0.0, 0), ('cinemusic01.mp3', 8.0, -2),
+        ('tyops_cine02.mp3', 0.0, -1), ('univ_soft.mp3', 0.0, 0), ('emopiano2.mp3', 0.0, 0)]
+SEGS = []  # file, timeline start, source offset, duration, fade in, fade out, gain dB
+for k, (f, off, g) in enumerate(_src):
+    d = (_st[k + 1] - _st[k]) + (5.0 if k < 5 else 0.0)
+    SEGS.append((f, _st[k], off, round(d, 2), 3.0 if k == 0 else 4.0, 5.0 if k < 5 else 4.5, g))
 mus = np.zeros((N, 2))
 def lufs_gain(x, target=-20.0):
     # quick K-weighted-ish loudness proxy: RMS of high-passed signal
@@ -305,7 +308,7 @@ for i in range(0, len(act), 48):  # 1 ms steps
 duck = np.ones(N); duck[:len(sm)] = 1 - 0.55 * sm[:N]
 base = np.full(N, db(-9.5))
 # lift the bed in narration-free moments: open, title, end card
-for a, b_, lvl in [(0, 1.0, -6), (481.6, 489, -4.5)]:
+for a, b_, lvl in [(0, 1.0, -6), (DUR - 7.4, DUR, -4.5)]:
     i0, i1 = int(a * SR), int(b_ * SR); base[i0:i1] = db(lvl)
 base = signal.lfilter([1 - 0.9995], [1, -0.9995], base)  # smooth level changes
 mus = mus * (base * duck)[:, None]

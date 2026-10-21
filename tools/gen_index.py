@@ -15,7 +15,9 @@ def at(ph, n=1):
                 return W[i]['s']
     raise SystemExit('anchor not found: ' + ph)
 
-DURATION = 489.0
+import soundfile as _sf
+_n = _sf.info(ROOT + 'work/narr_clean.wav')
+DURATION = round(_n.frames / _n.samplerate + 6.4, 2)  # narration (incl. 1.2 s tail) + end card
 AUDIO = sys.argv[1] if len(sys.argv) > 1 else 'assets/narration_clean.wav'
 UHD = '--uhd' in sys.argv
 
@@ -63,6 +65,10 @@ VIDEOS = [  # id, src, start, duration, scene index (for stacking)
     ('v2', 'assets/vid/v2_write.mp4', round(at('dia mula mengkaji') - 0.4, 3), 6.75, 6),
     ('v3', 'assets/vid/v3_walk.mp4', round(at('matlamat') - 0.3, 3), 9.15, 21),
 ]
+def _bound(st, du, si):
+    nxt = plan['scenes'][si + 1]['start'] if si + 1 < len(plan['scenes']) else DURATION
+    return round(min(du, nxt + 0.6 - st), 3)
+VIDEOS = [(v[0], v[1], v[2], _bound(v[2], v[3], v[4]), v[4]) for v in VIDEOS]
 plan['videos'] = {v[0]: dict(src=v[1], start=v[2], dur=v[3], scene=v[4]) for v in VIDEOS}
 open(ROOT + 'video/assets/js/plan.js', 'w').write('window.PLAN=' + json.dumps(plan, ensure_ascii=False) + ';\n')
 

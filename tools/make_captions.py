@@ -38,7 +38,7 @@ open('video/assets/js/words.js','w').write('window.WORDS='+json.dumps([[norm(w['
 def ts(t):
     h=int(t//3600); m=int(t%3600//60); s=t%60
     return f"{h:02d}:{m:02d}:{int(s):02d},{int(round((s-int(s))*1000)):03d}".replace(',1000',',999')
-with open('deliverables_srt.tmp','w') as f:
+with open('deliverables/Sejarah_Skizofrenia_MS.srt','w') as f:
     for j,c in enumerate(C,1):
         f.write(f"{j}\n{ts(c['s'])} --> {ts(c['e'])}\n{' '.join(x['w'] for x in c['w'])}\n\n")
 print(len(C),"captions; max len",max(len(' '.join(x['w'] for x in c['w'])) for c in C))

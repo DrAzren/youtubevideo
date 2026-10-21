@@ -1,6 +1,6 @@
 # Nota Semakan — Audio, Fakta & Kawalan Kualiti
 
-## 1. Suntingan audio (MP3 asal 9:16 → narasi bersih 8:02)
+## 1. Suntingan audio (MP3 asal 9:16 → narasi bersih 7:41, versi 2)
 
 Saya hanya memotong di tempat yang benar-benar senyap, atau di titik rendah tenaga yang sudah disahkan. Setiap potongan ada pemegang (handle) 35–60 ms dan crossfade 12 ms. Jadi tiada perkataan yang terpotong.
 
@@ -16,9 +16,23 @@ Saya hanya memotong di tempat yang benar-benar senyap, atau di titik rendah tena
 | 7:05 | Bunyi hesitasi antara "Tapi" dan "walaubagaimanapun" | Filler |
 | 7:59–8:03 | "Dan hari ini kita gunakan ubat antipsikotik jenis." | Mula semula; versi lengkap dikekalkan |
 | 8:44–8:48 | "Sebab itu saya sendiri sangat menekankan. … Batalkan." | Arahan "batalkan" + ayat yang dibatalkan |
-| Seluruh rakaman | Jeda panjang dipendekkan: ±0.48 s di hujung ayat, ±0.30 s selepas koma, maksimum 0.20 s di tengah ayat | Rentak |
+| **Versi 2** | | |
+| 0:06 | Bunyi sebelum "Bayangkan" | Bukan perkataan |
+| 1:06 | "a-" sebelum "Jom kita balik sejarah sikit" | Filler |
+| 1:20 | "zaman" yang pertama ("direkodkan ~~zaman~~ sejak zaman tamadun") | Perkataan berulang |
+| 3:45 | "eh" sebelum "Pada tahun 1908" | Filler |
+| 4:11 | "e…" sebelum "tapi jangan salah faham" | Filler |
+| 4:42 | "Dalam…" yang pertama ("dalam… dalam nak menerangkan") | Perkataan berulang |
+| 6:55 | "eh" sebelum "Tapi ubat-ubat ni" | Filler |
+| 7:38 | "eh" sebelum "tapi bukan bermaksud" | Filler |
+| 7:56 | "eee" sebelum "perlu berdasarkan" | Filler |
+| 8:32 | "a-" sebelum "Matlamat" | Filler |
+| 9:06 | "e" sebelum "boleh datang" | Filler |
+| Seluruh rakaman | Jeda dipadatkan: ±0.07 s antara perkataan dalam ayat, ±0.15 s selepas koma, ±0.26 s di hujung ayat, ±0.4–0.55 s hanya di pertukaran bab | Rentak lebih padat (jumlah senyap 63 s → 44 s) |
 
-**Audit sempadan perkataan:** Saya transkrip semula audio yang sudah bersih dengan Whisper large-v3, kemudian bandingkan perkataan demi perkataan dengan transkrip asal. Hasilnya 95% padanan. Semua perbezaan sama ada ejaan Whisper atau ulangan yang memang sengaja dibuang. Lima tempat yang meragukan saya dengar semula secara berasingan, dan kesemuanya masih utuh: "Eugen Bleuler", "ni lagi macam yang kita gunakan hari ni", "dan ada kekurangan", "Tapi" dan "ada".
+**Kaedah v2:** Whisper cenderung "membersihkan" filler dalam transkripsinya. Jadi saya transkrip semula rakaman asal dengan model akustik MMS (CTC, tanpa model bahasa), yang menulis setiap bunyi sebagaimana didengar. Filler dan ulangan dikenal pasti daripada perbandingan transkrip MMS dengan Whisper, kemudian setiap satu disahkan pada peringkat huruf (masa setiap huruf dan tenaga 10 ms) sebelum dipotong. Partikel pertuturan seperti "dia", "ni" dan "lah" dikekalkan kerana ia sebahagian gaya bercakap anda.
+
+**Audit sempadan perkataan (v2):** Saya transkrip semula audio akhir dengan Whisper large-v3 dan bandingkan dengan skrip penuh. Hasilnya 94% padanan, dan semua perbezaan hanya ejaan Whisper. Empat tempat yang tidak ditulis oleh Whisper ("kepada fungsi harian", "dan pengurusan tingkah laku", "Tapi walaubagaimanapun", "Jom kita balik sejarah sikit") saya dengar semula secara berasingan, dan semuanya masih utuh. Masa kapsyen kini diperoleh melalui penjajaran paksa skrip pada audio akhir.
 
 **Pemprosesan suara:** highpass 75 Hz, pengurangan hingar ringan, de-click, EQ (+1.2 dB @160 Hz kehangatan, −2 dB @320 Hz, +2.2 dB @3.4 kHz kejelasan, +1.5 dB shelf @9.5 kHz), de-esser, kompresi 2.2:1 dan limiter.
 **Kekuatan bunyi akhir:** −16.0 LUFS integrated, true peak −3.7 dBTP (had −1 dBTP).
@@ -66,7 +80,7 @@ Apa yang anda ucapkan **tidak diubah**. Teks pada skrin menggunakan ejaan dan ko
 
 | Fail | Butiran |
 |---|---|
-| `release/Sejarah_Skizofrenia_4K_UHD.mp4` | 3840×2160, 30 fps, H.264 High, AAC stereo 320 kbps / 48 kHz, 8:09 |
+| `release/Sejarah_Skizofrenia_4K_UHD.mp4` | 3840×2160, 30 fps, H.264 High, AAC stereo 320 kbps / 48 kHz, 7:47 |
 | `release/Sejarah_Skizofrenia_1080p.mp4` | 1920×1080 render induk HyperFrames (kualiti "delivery") |
 | `deliverables/Sejarah_Skizofrenia_MS.srt` | Sari kata Bahasa Melayu (217 frasa, ikut masa perkataan) |
 | `deliverables/stems/*.flac` | Narasi bersih, muzik latar, SFX, campuran akhir (48 kHz) |
