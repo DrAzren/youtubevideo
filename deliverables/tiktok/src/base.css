@@ -1,0 +1,10 @@
+@font-face { font-family: "Playfair Display"; src: url("../../../video/assets/fonts/PlayfairDisplay.ttf"); font-weight: 400 900; }
+@font-face { font-family: "Inter"; src: url("../../../video/assets/fonts/Inter.ttf"); font-weight: 100 900; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 1080px; height: 1920px; overflow: hidden; background: #0b1629; }
+.stage { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: Inter, sans-serif; }
+.abs { position: absolute; }
+.bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.me { position: absolute; left: 40px; bottom: -40px; width: 1040px; filter: drop-shadow(0 0 22px rgba(227,201,143,.45)) drop-shadow(0 30px 40px rgba(0,0,0,.6)); }
+.tag { position: absolute; left: 60px; top: 1290px; background: #e3c98f; color: #0b1629; padding: 14px 26px; border-radius: 10px; font: 900 40px Inter; letter-spacing: .02em; box-shadow: 0 10px 30px rgba(0,0,0,.45); }
+.tag small { display: block; font: 700 26px Inter; letter-spacing: .12em; margin-top: 2px; }
